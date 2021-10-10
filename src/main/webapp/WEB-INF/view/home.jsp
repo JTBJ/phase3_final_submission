@@ -44,7 +44,6 @@
 		<p><a href="${pageContext.request.contextPath}/filter-purchase-by-date">Filer Purchases by Date</a></p>
  		<p><a href="${pageContext.request.contextPath}/filter-purchase-by-Category">Filer Purchases by Category</a>
  		<p><a href="${pageContext.request.contextPath}/categorize-products">Categorize Products</a>
-		<p><a href="${pageContext.request.contextPath}/init-products">Initialize Products</a>
 		<p><a href="${pageContext.request.contextPath}/change-password">Change Password</a>
 	</security:authorize>
 	

@@ -73,8 +73,8 @@
 					style="background-color: lightblue; color: darkblue; margin-bottom: 20px;" />
 		</form:form>
 		
+		<h4>Delete a Category from the Table</h4>
 		<form:form
-			<h4>Delete a Category from the Table</h4>
 			action="${pageContext.request.contextPath}/category-deleted"
 			method="post">
 			<b>To delete a category, fill in the values.</b><br/>

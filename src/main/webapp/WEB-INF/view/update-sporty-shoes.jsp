@@ -60,14 +60,14 @@
 			</p>
 
 			<p>				
-				Update Category Name<input type="text" name="shoeCategory" required />
+				Enter Category Id to change to <input type="number" name="shoeCategoryId" required />
 			</p>
 				<input type="submit" value="Change"
 					style="background-color: lightblue; color: darkblue;" />
 		</form:form>
 		
+		<h4>Add a Shoe to the Table</h4>
 		<form:form
-			<h4>Add a Shoe to the Table</h4>
 			action="${pageContext.request.contextPath}/shoe-added"
 			method="post">
 			<b>To create a new shoe, fill in the values.</b><br/>
@@ -83,8 +83,8 @@
 					style="background-color: lightblue; color: darkblue;" />
 		</form:form>
 		
+		<h4>Delete a Shoe from the Table</h4>
 		<form:form
-			<h4>Delete a Shoe from the Table</h4>
 			action="${pageContext.request.contextPath}/shoe-deleted"
 			method="post">
 			<b>To delete a shoe, fill in the values.</b><br/>

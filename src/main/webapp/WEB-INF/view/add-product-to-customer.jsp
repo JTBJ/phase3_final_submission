@@ -56,7 +56,7 @@
 			<tbody>
 				<tr>
 					<c:forEach items="${customer.shoeProduct}" var="customer">
-						<td>"${customer.id}"
+						<td>"${customer.id}"</td>
 						<td>"${customer.name}"</td>
 						<td>"${customer.productCategory}"</td>
 					</c:forEach>

@@ -67,11 +67,13 @@ public class SportyShoesController {
 	public String shoeUpdated(HttpServletRequest request, Model model) {
 		
 		String shoeName = request.getParameter("shoeName");
-		String shoeCategory = request.getParameter("shoeCategory");
+		int shoeCategory = Integer.parseInt(request.getParameter("shoeCategoryId"));
 		int shoeId = Integer.parseInt(request.getParameter("shoeId"));
 		
 		ShoeProduct shoeProduct = shoeProductDao.getShoeProductById(shoeId);
-		shoeProduct.getProductCategory().setCategoryName(shoeCategory);
+		ShoeCategory shoeProductCategory = shoeProduct.getProductCategory();
+		shoeProductCategory = shoeCategoryDao.getShoeCategoryById(shoeCategory);
+		shoeProduct.setProductCategory(shoeProductCategory);
 		shoeProduct.setName(shoeName);
 		
 		shoeProductDao.updateShoeProduct(shoeProduct, shoeId);
@@ -187,6 +189,7 @@ public class SportyShoesController {
 		customer.setShoeProduct(list);
 		
 		purchaseReports.setShoeCategory(shoeProduct.getProductCategory());
+		purchaseReports.setCustomer(customer);
 		purchaseReportsDao.addPurchaseReports(purchaseReports);
 		
 		customerDao.updateCustomer(customer, customerId);

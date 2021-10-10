@@ -20,11 +20,11 @@
 	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous">
 
-<title>Customer List</title>
+<title>Reports filtered by Date</title>
 </head>
 <body>
 	<div class="container">
-		<h1>Customer List</h1>
+		<h1>Reports filtered by Date</h1>
 		<table class="table table-bordered table-striped">
 			<thead class="table-dark">
 				<tr>
