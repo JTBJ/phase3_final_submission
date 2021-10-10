@@ -68,6 +68,18 @@
 			</tbody>
 		</table>
 		<!-- <p th:text="${customers}"/> -->
+		
+		<form:form
+			action="${pageContext.request.contextPath}/select-customer-by-id"
+			method="post">
+			
+			<p>
+				Enter a customer id <input type="number" name="customerId" required />
+			</p>
+
+				<input type="submit" value="Select"
+					style="background-color: lightblue; color: darkblue; margin-bottom: 20px;" />
+		</form:form>
 	</div>
 </body>
 </html>

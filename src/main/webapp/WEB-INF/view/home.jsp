@@ -38,6 +38,8 @@
  	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">
+		<p><a href="${pageContext.request.contextPath}/update-sporty-shoes">Update Items</a></p>
+		<p><a href="${pageContext.request.contextPath}/update-sporty-shoes-category">Update Category</a></p>
 		<p><a href="${pageContext.request.contextPath}/list-users">List Users</a>
 		<p><a href="${pageContext.request.contextPath}/filter-purchase-by-date">Filer Purchases by Date</a></p>
  		<p><a href="${pageContext.request.contextPath}/filter-purchase-by-Category">Filer Purchases by Category</a>

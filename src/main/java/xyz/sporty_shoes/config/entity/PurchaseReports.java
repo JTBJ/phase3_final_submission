@@ -34,6 +34,10 @@ public class PurchaseReports {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "category_id")
 	private ShoeCategory shoeCategory;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 
 	public PurchaseReports() {
 	}
@@ -66,9 +70,18 @@ public class PurchaseReports {
 		this.shoeCategory = shoeCategory;
 	}
 
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 	@Override
 	public String toString() {
-		return "PurchaseReports [id=" + id + ", dateAdded=" + dateAdded + ", shoeCategory=" + shoeCategory + "]";
+		return "PurchaseReports [id=" + id + ", dateAdded=" + dateAdded + ", shoeCategory=" + shoeCategory
+				+ ", customer=" + customer + "]";
 	}
 
 }

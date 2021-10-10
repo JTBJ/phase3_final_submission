@@ -55,6 +55,115 @@ public class SportyShoesController {
 		model.addAttribute("shoeProductList", list);
 		return "list-sporty-shoes";
 	}
+	
+	@RequestMapping("/update-sporty-shoes")
+	public String updateShoeProduct(Model model) {
+		List<ShoeProduct> list = shoeProductDao.listShoeProducts();
+		model.addAttribute("shoeProductList", list);
+		return "update-sporty-shoes";
+	}
+	
+	@RequestMapping("/shoe-updated")
+	public String shoeUpdated(HttpServletRequest request, Model model) {
+		
+		String shoeName = request.getParameter("shoeName");
+		String shoeCategory = request.getParameter("shoeCategory");
+		int shoeId = Integer.parseInt(request.getParameter("shoeId"));
+		
+		ShoeProduct shoeProduct = shoeProductDao.getShoeProductById(shoeId);
+		shoeProduct.getProductCategory().setCategoryName(shoeCategory);
+		shoeProduct.setName(shoeName);
+		
+		shoeProductDao.updateShoeProduct(shoeProduct, shoeId);
+		
+		System.out.println("Shoe updated");
+		
+		List<ShoeProduct> list = shoeProductDao.listShoeProducts();
+		model.addAttribute("shoeProductList", list);
+		
+		System.out.println("Shoe updated successfully.");
+		
+		return "shoe-updated";
+	}
+	
+	@RequestMapping("/shoe-added")
+	public String shoeAdded(HttpServletRequest request, Model model) {
+		ShoeProduct shoeProduct = new ShoeProduct(request.getParameter("shoeName"));
+		shoeProduct.setProductCategory(shoeCategoryDao.getShoeCategoryById(
+				Integer.parseInt(request.getParameter("categoryId"))));
+		
+		shoeProductDao.addShoeProduct(shoeProduct);
+		
+		System.out.println("New shoe created");
+		
+		List<ShoeProduct> list = shoeProductDao.listShoeProducts();
+		model.addAttribute("shoeProductList", list);
+		
+		System.out.println("Shoe created successfully.");
+		
+		return "shoe-updated";
+	}
+	
+	@RequestMapping("/shoe-deleted")
+	public String shoeDeleted(HttpServletRequest request, Model model) {
+		int shoeId = Integer.parseInt(request.getParameter("shoeId"));
+		
+		shoeProductDao.deleteShoeProduct(shoeId);
+		
+		List<ShoeProduct> list = shoeProductDao.listShoeProducts();
+		model.addAttribute("shoeProductList", list);
+		
+		System.out.println("Shoe deleted successfully.");
+		
+		return "shoe-updated";
+	}
+	
+	@RequestMapping("/update-sporty-shoes-category")
+	public String updateCategory(Model model) {
+		List<ShoeCategory> list = shoeCategoryDao.listShoeCategorys();
+		model.addAttribute("shoeCategoryList", list);
+		return "update-sporty-shoes-category";
+	}
+	
+	@RequestMapping("/category-updated")
+	public String categoryUpdated(HttpServletRequest request, Model model) {
+		String categoryId = request.getParameter("categoryId");
+		String updatedName = request.getParameter("updatedName");
+		String createdCategory = request.getParameter("newName");
+		
+		int catId = 0;
+		
+		if(categoryId != null) {
+			catId = Integer.parseInt(categoryId);
+			ShoeCategory shoeCategory = shoeCategoryDao.getShoeCategoryById(catId);
+			shoeCategory.setCategoryName(updatedName);
+			shoeCategoryDao.updateShoeCategory(shoeCategory, catId);
+		}else {
+			ShoeCategory shoeCategory = new ShoeCategory(createdCategory);
+			shoeCategoryDao.addShoeCategory(shoeCategory);
+		}
+		
+		List<ShoeCategory> list = shoeCategoryDao.listShoeCategorys();
+		model.addAttribute("shoeCategoryList", list);
+		
+		System.out.println("Category updated or added successfully.");
+		
+		return "category-updated";
+	}
+	
+	@RequestMapping("/category-deleted")
+	public String deleteCategory(HttpServletRequest request, Model model) {
+		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+		
+		shoeCategoryDao.deleteShoeCategoryById(categoryId);
+		
+		List<ShoeCategory> list = shoeCategoryDao.listShoeCategorys();
+		model.addAttribute("shoeCategoryList", list);
+		
+		System.out.println("Category deleted successfully.");
+		
+		return "category-updated";
+	}
 
 	@RequestMapping("/select-sporty-shoes")
 	public String selectSportyShoes(Model model) {
@@ -90,6 +199,16 @@ public class SportyShoesController {
 	@RequestMapping("/list-users")
 	public String listUsers(Model model) {
 		List<Customer> list = customerDao.listCustomers();
+		model.addAttribute("customerList", list);
+		return "list-users";
+	}
+	
+	@RequestMapping("/select-customer-by-id")
+	public String selectCustomerById(HttpServletRequest request, Model model) {
+		int customerId = Integer.parseInt(request.getParameter("customerId"));
+		
+		List<Customer> list = customerDao.listCustomers();
+		list.add(customerDao.getCustomerById(customerId));
 		model.addAttribute("customerList", list);
 		return "list-users";
 	}
@@ -132,6 +251,7 @@ public class SportyShoesController {
 		model.addAttribute("purchaseReports", list);
 		return "filter-purchase-by-category";
 	}
+	
 	@RequestMapping("/change-password")
 	public String changePassword() {
 		return "change-password";
