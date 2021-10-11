@@ -1,8 +1,7 @@
 package xyz.sporty_shoes.config;
 
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -12,31 +11,27 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import xyz.sporty_shoes.config.dao.CustomerDao;
-import xyz.sporty_shoes.config.dao.CustomerDaoImpl;
-import xyz.sporty_shoes.config.dao.ShoeCategoryDao;
-import xyz.sporty_shoes.config.dao.ShoeCategoryDaoImpl;
-import xyz.sporty_shoes.config.dao.ShoeProductDao;
-import xyz.sporty_shoes.config.dao.ShoeProductDaoImpl;
 import xyz.sporty_shoes.config.entity.Customer;
 import xyz.sporty_shoes.config.entity.PurchaseReports;
 import xyz.sporty_shoes.config.entity.ShoeCategory;
 import xyz.sporty_shoes.config.entity.ShoeProduct;
 import xyz.sporty_shoes.config.lifecycle.InstantiateDatabase;
 
+@EnableTransactionManagement
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:sportyshoes.properties")
@@ -128,4 +123,40 @@ public class SportyShoesConfig {
 		new InstantiateDatabase().initializeDatabase();
 	}
 	
+	private Properties getHibernateProperties() {
+
+		// set hibernate properties
+		Properties props = new Properties();
+
+//		props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+		props.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+
+		return props;
+	}
+	
+	@Bean
+	public LocalSessionFactoryBean sessionFactory() {
+
+		// create session factorys
+		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+
+		// set the properties
+		sessionFactory.setDataSource(securityDataSource());
+		sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
+		sessionFactory.setHibernateProperties(getHibernateProperties());
+
+		return sessionFactory;
+	}
+
+	@Bean
+	@Autowired
+	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+
+		// setup transaction manager based on session factory
+		HibernateTransactionManager txManager = new HibernateTransactionManager();
+		txManager.setSessionFactory(sessionFactory);
+
+		return txManager;
+	}
 }
