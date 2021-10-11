@@ -124,7 +124,7 @@ public class SportyShoesConfig {
     }
 	
 	@PostConstruct
-	private void callDatabaseInit() {
+	public void callDatabaseInit() {
 		new InstantiateDatabase().initializeDatabase();
 	}
 	

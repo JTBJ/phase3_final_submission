@@ -62,7 +62,8 @@ public class ShoeProductDaoImpl implements ShoeProductDao {
 	@Override
 	@Transactional
 	public void deleteShoeProduct(int id) {
-		session.createQuery("delete from ShoeProduct sp where sp.id='" + id + "'").executeUpdate();
+		ShoeProduct shoeProduct = session.get(ShoeProduct.class, id);
+		session.delete(shoeProduct);
 		System.out.println("Shoe product deleted.");
 	}
 

@@ -44,13 +44,8 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public void addCustomer(Customer customer) {
-//		session.save(customer);
-		if(customer == null) {
-			System.out.println("customer is null");
-		}
-		if(session == null) {
-			System.out.println("session is null");
-		}
+		session.save(customer);
+		
 	}
 
 	@Override

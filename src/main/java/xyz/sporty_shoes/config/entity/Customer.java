@@ -42,7 +42,7 @@ public class Customer {
 	private String email;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "shoe_product_id")
+	@Column(name = "shoe_product")
 	private List<ShoeProduct> shoeProduct;
 
 	public Customer() {

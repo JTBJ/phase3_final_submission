@@ -34,6 +34,11 @@ public class SportyShoesController {
 	@Autowired
 	private PurchaseReportsDao purchaseReportsDao;
 	
+	@RequestMapping("/home")
+	public String homes() {
+		return "home";
+	}
+	
 	@RequestMapping("/")
 	public String home() {
 		return "home";
@@ -91,10 +96,20 @@ public class SportyShoesController {
 	@RequestMapping("/shoe-added")
 	public String shoeAdded(HttpServletRequest request, Model model) {
 		ShoeProduct shoeProduct = new ShoeProduct(request.getParameter("shoeName"));
-		shoeProduct.setProductCategory(shoeCategoryDao.getShoeCategoryById(
-				Integer.parseInt(request.getParameter("categoryId"))));
 		
-		shoeProductDao.addShoeProduct(shoeProduct);
+		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+		ShoeCategory shoeCategory = shoeCategoryDao.getShoeCategoryById(categoryId);
+		
+		shoeProduct.setProductCategory(new ShoeCategory(shoeCategory.getCategoryName()));
+		
+		Customer customer = new Customer("AI", "abc", "sporty", "shoes", "sporty@shoes.com");
+		List<ShoeProduct> l = new ArrayList<>();
+		l.add(shoeProduct);
+		customer.setShoeProduct(l);
+		
+		customerDao.addCustomer(customer);
+//		shoeProductDao.addShoeProduct(shoeProduct);
+//		shoeCategoryDao.addShoeCategory(shoeCategory);
 		
 		System.out.println("New shoe created");
 		
@@ -210,8 +225,9 @@ public class SportyShoesController {
 	public String selectCustomerById(HttpServletRequest request, Model model) {
 		int customerId = Integer.parseInt(request.getParameter("customerId"));
 		
-		List<Customer> list = customerDao.listCustomers();
-		list.add(customerDao.getCustomerById(customerId));
+		Customer customer = customerDao.getCustomerById(customerId);
+		List<Customer> list = new ArrayList<>();
+		list.add(customer);
 		model.addAttribute("customerList", list);
 		return "list-users";
 	}

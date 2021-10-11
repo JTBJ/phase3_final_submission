@@ -28,6 +28,7 @@
 		<table class="table table-bordered table-striped">
 			<thead class="table-dark">
 				<tr>
+					<th>purchase_report_id
 					<th>Purchase Reports Filtered Date</th>
 				</tr>
 			</thead>

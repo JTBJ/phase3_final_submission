@@ -37,31 +37,34 @@
 			</thead>
 			<tbody>
 				<tr>
-						<td>"${customer.id}"</td>
-						<td>"${customer.userName}"</td>
-						<td>"${customer.firstName}"</td>
-						<td>"${customer.lastName}"</td>
-						<td>"${customer.email}"</td>
+					<td>"${customer.id}"</td>
+					<td>"${customer.userName}"</td>
+					<td>"${customer.firstName}"</td>
+					<td>"${customer.lastName}"</td>
+					<td>"${customer.email}"</td>
 				</tr>
 			</tbody>
 		</table>
-		
-		<table>
-			<thead>
+
+		<table class="table table-bordered table-striped">
+			<thead class="table-dark">
 				<tr>
-					<td>product id</td>
-					<td>product name</td>
+					<th>product id</th>
+					<th>product name</th>
+					<th>product category</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<c:forEach items="${customer.shoeProduct}" var="customer">
+
+				<c:forEach items="${customer.shoeProduct}" var="customer">
+					<tr>
 						<td>"${customer.id}"</td>
 						<td>"${customer.name}"</td>
 						<td>"${customer.productCategory}"</td>
-					</c:forEach>
+					</tr>
+				</c:forEach>
 
-				</tr>
+
 			</tbody>
 		</table>
 		<!-- <p th:text="${customers}"/> -->
@@ -71,7 +74,7 @@
 			<p>
 				Enter Product Id <input type="text" name="product_id" required />
 			</p>
-			
+
 			<p>
 				Enter Your Id <input type="text" name="customer_id" required />
 			</p>

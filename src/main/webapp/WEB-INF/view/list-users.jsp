@@ -53,6 +53,7 @@
 		<table class="table table-bordered table-striped">
 			<thead class="table-dark">
 				<tr>
+					<th>Username</th>
 					<th>Products Selected by Customer</th>
 				</tr>
 			</thead>
